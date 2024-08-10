@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                // Build the application
+                sh './mvnw clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                // Run tests that use Testcontainers
+                sh './mvnw test'
+            }
+        }
+    }
+    post {
+        always {
+            // Archive test results
+            junit '**/target/test-classes/TEST-*.xml'
+            // Clean up Docker (if needed)
+            sh 'docker system prune -f'
+        }
+    }
+}
