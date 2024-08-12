@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/product")
 public class ProductController {
 
@@ -34,6 +35,11 @@ public class ProductController {
         List<Product> products = productService.getAllProducts();
         log.info("All Products {}", products.toString());
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity getCategories(){
+        return ResponseEntity.ok(productService.findCategory());
     }
 
     @GetMapping

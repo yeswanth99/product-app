@@ -162,6 +162,11 @@ public class ProductService {
     }
 
     @Transactional
+    public List<String> findCategory(){
+        return productRepository.findDistinctCategories();
+    }
+
+    @Transactional
     public Page<Product> findProductsByPageAndSort(int pageNum, int pageSize){
         Pageable pageable = PageRequest.of(pageNum,pageSize, Sort.Direction.DESC, "id");
         Page<Product> productList = productRepository.findAll(pageable);

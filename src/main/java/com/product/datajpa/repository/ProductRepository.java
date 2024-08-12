@@ -22,4 +22,7 @@ public interface ProductRepository extends JpaRepository<Product,Long>, JpaSpeci
 
     @Query("SELECT p FROM Product p WHERE p.category=:category AND p.price > :min AND p.price < :max")
     Optional<List<Product>> findByCategoryAndPriceGreaterThan(@Param("category") String category, @Param("min") double min, @Param("max") double max);
+
+    @Query("SELECT DISTINCT p.category FROM Product p")
+    List<String> findDistinctCategories();
 }
