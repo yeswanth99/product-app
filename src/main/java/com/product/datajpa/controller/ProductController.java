@@ -83,17 +83,23 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Product>> searchProducts(
+    public ResponseEntity searchProducts(
             @RequestParam(required = false) Optional<String> title,
             @RequestParam(required = false) Optional<String> category,
             @RequestParam(required = false) Optional<Double> min,
             @RequestParam(required = false) Optional<Double> max,
-            @RequestParam(required = false) Optional<Double> rating) {
+            @RequestParam(required = false) Optional<Double> rating,
+            @RequestParam(required = false) Optional<Integer> pageNum,
+            @RequestParam(required = false) Optional<Integer> pageSize) {
 
-        // Call the service method and pass the Optional parameters directly
+        if (pageNum.isPresent() && pageSize.isPresent()){
+            Page<Product> productPage = productService.searchProductsByDynamicQueryPage(title, category , min ,
+                    max, rating, pageNum, pageSize);
+            return ResponseEntity.ok(productPage);
+        }
+
         List<Product> products = productService.searchProductsByDynamicQuery(title, category, min, max, rating);
 
-        // Return the list of products in the response
         return ResponseEntity.ok(products);
     }
 

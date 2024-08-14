@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
         ErrorVo errorVo = new ErrorVo();
         errorVo.setCode(0);
         errorVo.setSuccess(false);
-        errorVo.setMessage("Internal Server Error");
+        errorVo.setMessage(e.toString());
         return new ResponseEntity<>(errorVo, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

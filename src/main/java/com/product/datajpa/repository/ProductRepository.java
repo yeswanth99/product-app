@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Long>, JpaSpecificationExecutor<Product> {
+public interface ProductRepository extends JpaRepository<Product,Long>, JpaSpecificationExecutor<Product>, CustomProductRepository {
     Optional<Product> findBySku(String skucode);
 
     Optional<List<Product>> findByTags(String tag);

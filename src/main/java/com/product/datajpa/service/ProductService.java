@@ -195,10 +195,30 @@ public class ProductService {
         Specification<Product> productSpecification = ProductSpecification
                 .getProductByDynamicQuery(title.orElse(null),
                         category.orElse(null),
-                        min.orElse(Double.MAX_VALUE),
+                        min.orElse(Double.MIN_VALUE),
                         max.orElse(Double.MAX_VALUE),
                         rating.orElse(0.0));
         List<Product> productList = productRepository.findAll(productSpecification);
         return productList;
+    }
+
+    @Transactional
+    public Page<Product> searchProductsByDynamicQueryPage(Optional<String> title,
+                                                      Optional<String> category,
+                                                      Optional<Double> min,
+                                                      Optional<Double> max,
+                                                      Optional<Double> rating,
+                                                          Optional<Integer> pageNum,
+                                                          Optional<Integer> pageSize){
+
+        Pageable pageable = PageRequest.of(pageNum.get(), pageSize.get());
+        Page<Product> productPage = productRepository.findProductsByCriteria(title.orElse(null),
+                category.orElse(null),
+                min.orElse(Double.MIN_VALUE),
+                max.orElse(Double.MAX_VALUE),
+                rating.orElse(0.0),
+                pageable);
+        System.out.println(productPage.get());
+        return productPage;
     }
 }
