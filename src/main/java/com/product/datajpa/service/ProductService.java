@@ -214,9 +214,9 @@ public class ProductService {
         Pageable pageable = PageRequest.of(pageNum.get(), pageSize.get());
         Page<Product> productPage = productRepository.findProductsByCriteria(title.orElse(null),
                 category.orElse(null),
-                min.orElse(Double.MIN_VALUE),
-                max.orElse(Double.MAX_VALUE),
-                rating.orElse(0.0),
+                min.orElse(0.0),
+                max.orElse(0.0),
+                rating.orElse(null),
                 pageable);
         System.out.println(productPage.get());
         return productPage;
